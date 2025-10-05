@@ -29,6 +29,37 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+## Deploying to Vercel
+
+This project can be deployed to Vercel as a static site. A minimal `vercel.json` is included to ensure client-side routing works correctly.
+
+Steps:
+
+1. Install the Vercel CLI (optional) or use the Vercel dashboard.
+
+	```bash
+	npm i -g vercel
+	```
+
+2. Create a new Vercel project and connect your Git repository, or run:
+
+	```bash
+	vercel
+	```
+
+3. Configure an environment variable named `REACT_APP_API_BASE` in the Vercel project settings. Set it to your backend URL (for example `https://api.example.com`). If you don't set it, the app defaults to `http://localhost:8080`.
+
+4. Build & deploy will run automatically on push. Locally you can test a production build with:
+
+	```bash
+	npm run build
+	npx serve -s build
+	```
+
+Notes:
+- The app uses the environment variable `REACT_APP_API_BASE` at build time. When deploying to Vercel, set that value in the project Environment Variables (Production) settings so the built bundle points to your live API.
+- `vercel.json` provides a rewrite so client-side routes return `index.html` and React Router works correctly.
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
