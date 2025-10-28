@@ -39,8 +39,8 @@ const EmployeeForm = () => {
         setForm(prev => ({
           ...prev,
           ...emp,
-          dateOfBirth: emp.dateOfBirth,
-          dateOfJoining: emp.dateOfJoining,
+          dateOfBirth: emp.dateOfBirth ? new Date(emp.dateOfBirth).toISOString().split('T')[0] : "",
+          dateOfJoining: emp.dateOfJoining ? new Date(emp.dateOfJoining).toISOString().split('T')[0] : "",
         }));
       });
     }
