@@ -29,13 +29,10 @@ const Home = () => {
 
   return (
     <div style={containerStyle}>
-      <h1 style={headingStyle}>💖 For My Jaan 💖</h1>
+      <h1 style={headingStyle}>Welcome to the Employee Management System 🚀</h1>
       <p style={paraStyle}>
-       The moments pass, the clocks all keep their chime, But in your presence, I transcend all time. You are the breath that fills my daily plea, The silent strength, the light that sets me free.
-
-My heart's a garden where your smile takes root, And gives my searching soul its sweetest fruit. The world may turn in chaos, storm, and stress, But I have found my home in your caress.
-
-I love you, Jaan, more than words convey, My constant sun, my dawn of every day.
+        This system helps you manage employee records efficiently. You can add new employees, update their details,
+        or remove them as needed. Use the navigation bar to get started.
       </p>
     </div>
   );
