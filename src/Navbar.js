@@ -69,7 +69,7 @@ const Navbar = () => {
   return (
     <nav style={navStyles}>
       <div style={leftContainer}>
-        <div style={companyTitle}>Rasika Pvt Ltd</div>
+        <div style={companyTitle}>Gaikwad Pvt Ltd</div>
         <div style={subtitle}>Employee Management System</div>
       </div>
 

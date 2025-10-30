@@ -4,21 +4,32 @@ import { getAllEmployees, deleteEmployee } from './employeeService';
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
+      setLoading(true); // Start loading
       const res = await getAllEmployees();
       setEmployees(res.data);
+      setError(null); // Clear any previous errors
     } catch (err) {
       console.error('Error fetching employees:', err);
-      alert("Failed to fetch employees. Check backend server and CORS config.");
+      setError("Failed to fetch employees. Please ensure the backend server is running and accessible.");
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure to delete this employee?")) {
-      await deleteEmployee(id);
-      fetchData();
+      try {
+        await deleteEmployee(id);
+        fetchData(); // Refetch data after deletion
+      } catch (err) {
+        console.error('Error deleting employee:', err);
+        setError("Failed to delete employee.");
+      }
     }
   };
 
@@ -37,6 +48,7 @@ const EmployeeList = () => {
     borderRadius: '12px',
     padding: '25px',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center', // Center content for loading/error messages
   };
 
   const headingStyle = {
@@ -85,6 +97,32 @@ const EmployeeList = () => {
     backgroundColor: '#ef4444',
     color: '#fff',
   };
+
+  const errorStyle = {
+    color: '#ef4444',
+    fontWeight: 'bold',
+  };
+
+  if (loading) {
+    return (
+      <div style={containerStyle}>
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>Loading Employees...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={containerStyle}>
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>An Error Occurred</h2>
+          <p style={errorStyle}>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={containerStyle}>
