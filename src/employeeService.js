@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-// Allow configuring the backend base URL with an environment variable.
-// In Vercel (or any hosting), set REACT_APP_API_BASE to the backend root
-// e.g. https://api.example.com or https://api.example.com:8080
-// If not set, default to the local backend used during development.
+
+// The base URL for the backend API.
+// During local development, this will default to 'http://localhost:8080'.
+// When deployed, you MUST set the REACT_APP_API_BASE environment variable
+// in your hosting service (e.g., Vercel) to the public URL of your deployed backend.
 const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:8080';
 const BASE_URL = `${API_BASE.replace(/\/$/, '')}/api/employees`;
 
