@@ -14,15 +14,6 @@ const Navbar = () => {
     flexWrap: 'wrap',
   };
 
-  const logoStyles = {
-    fontSize: '1.4rem',
-    fontWeight: 'bold',
-    color: '#fff',
-    textDecoration: 'none',
-    fontFamily: 'Segoe UI, sans-serif',
-    lineHeight: '1.2',
-  };
-
   const leftContainer = {
     display: 'flex',
     flexDirection: 'column',
