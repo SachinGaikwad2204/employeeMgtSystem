@@ -47,23 +47,6 @@ const EmployeeList = () => {
     fetchData();
   }, []);
 
-  // ... (styles remain the same)
-
-  if (loading) {
-    // ... (loading JSX remains the same)
-  }
-
-  if (error) {
-    // ... (error JSX remains the same)
-  }
-
-  return (
-    // ... (main JSX remains the same)
-  );
-};
-
-export default EmployeeList;
-
   const containerStyle = {
     padding: '30px',
     background: 'linear-gradient(to right, #f0f9ff, #e0f2fe)',

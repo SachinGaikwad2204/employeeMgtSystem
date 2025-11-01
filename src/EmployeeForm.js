@@ -12,14 +12,71 @@ const EmployeeForm = () => {
   const { id } = useParams();
 
   const [form, setForm] = useState({
-    // ... (form state remains the same)
+    fullName: "",
+    email: "",
+    phone: "",
+    gender: "",
+    dateOfBirth: "",
+    department: "",
+    jobTitle: "",
+    dateOfJoining: "",
+    salary: "",
+    employmentType: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    panNumber: "",
+    aadhaarNumber: "",
+    profilePhoto: null,
+    resume: null,
   });
   const [errors, setErrors] = useState({});
 
-  // ... (useEffect and handleChange remain the same)
+  useEffect(() => {
+    if (id) {
+      getEmployeeById(id).then((res) => {
+        const emp = res.data;
+        setForm((prev) => ({
+          ...prev,
+          ...emp,
+          dateOfBirth:
+            emp.dateOfBirth
+              ? new Date(emp.dateOfBirth).toISOString().split("T")[0]
+              : "",
+          dateOfJoining:
+            emp.dateOfJoining
+              ? new Date(emp.dateOfJoining).toISOString().split("T")[0]
+              : "",
+        }));
+      });
+    }
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      setForm({ ...form, [name]: files[0] });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
+  };
 
   const validateForm = () => {
-    // ... (validation logic remains the same)
+    const newErrors = {};
+    if (!form.fullName) newErrors.fullName = "Full Name is required.";
+    if (!form.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      newErrors.email = "Email address is invalid.";
+    }
+    if (!form.phone) newErrors.phone = "Phone number is required.";
+    if (!form.department) newErrors.department = "Department is required.";
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
@@ -62,15 +119,6 @@ const EmployeeForm = () => {
       // Error toast is handled by toast.promise
     }
   };
-
-  // ... (styles remain the same)
-
-  return (
-    // ... (JSX remains the same)
-  );
-};
-
-export default EmployeeForm;
 
   // Styles
   const containerStyle = {
