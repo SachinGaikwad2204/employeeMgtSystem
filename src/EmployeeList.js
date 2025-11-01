@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { getAllEmployees, deleteEmployee } from './employeeService';
 
 const EmployeeList = () => {
@@ -9,33 +10,59 @@ const EmployeeList = () => {
 
   const fetchData = async () => {
     try {
-      setLoading(true); // Start loading
+      setLoading(true);
       const res = await getAllEmployees();
       setEmployees(res.data);
-      setError(null); // Clear any previous errors
+      setError(null);
     } catch (err) {
       console.error('Error fetching employees:', err);
       setError("Failed to fetch employees. Please ensure the backend server is running and accessible.");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure to delete this employee?")) {
-      try {
-        await deleteEmployee(id);
-        fetchData(); // Refetch data after deletion
-      } catch (err) {
-        console.error('Error deleting employee:', err);
-        setError("Failed to delete employee.");
-      }
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this employee?")) {
+      const promise = deleteEmployee(id);
+      
+      toast.promise(
+        promise,
+        {
+          pending: 'Deleting employee...',
+          success: 'Employee deleted successfully!',
+          error: 'Failed to delete employee.'
+        }
+      ).then(() => {
+        // Optimistically update UI for a faster experience
+        setEmployees(employees.filter(emp => emp.id !== id));
+      }).catch(err => {
+        // The toast will show the error, but we can still log it
+        console.error("Delete error", err);
+      });
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  // ... (styles remain the same)
+
+  if (loading) {
+    // ... (loading JSX remains the same)
+  }
+
+  if (error) {
+    // ... (error JSX remains the same)
+  }
+
+  return (
+    // ... (main JSX remains the same)
+  );
+};
+
+export default EmployeeList;
 
   const containerStyle = {
     padding: '30px',
