@@ -1,0 +1,190 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Use min-height for better content adaptability */
+  background: linear-gradient(to right, #e0f2fe, #bfdbfe); /* Lighter, more modern gradient */
+  color: #1e3a8a;
+  text-align: center;
+  padding: 40px 20px; /* Increased padding */
+  border-radius: 16px; /* Slightly larger border-radius */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* More pronounced shadow */
+  margin: 20px; /* Add some margin around the container */
+  overflow: hidden; /* For background animations */
+  position: relative;
+}
+
+.home-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+  animation: rotateBackground 20s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes rotateBackground {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.home-heading {
+  font-size: 3.5rem; /* Larger heading */
+  font-weight: 800; /* Bolder */
+  margin-bottom: 20px;
+  color: #1a202c; /* Darker, more prominent color */
+  opacity: 0;
+  animation: fadeInDown 1s ease-out forwards;
+}
+
+.home-paragraph {
+  font-size: 1.3rem; /* Slightly larger paragraph */
+  color: #4a5568; /* Softer text color */
+  max-width: 700px; /* Wider paragraph */
+  margin-bottom: 40px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards 0.3s; /* Delayed animation */
+}
+
+.stats-container {
+  background: #ffffff;
+  padding: 25px 40px; /* Increased padding */
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: zoomIn 0.8s ease-out forwards 0.6s; /* Delayed animation */
+}
+
+.stats-number {
+  font-size: 3.8rem; /* Larger number */
+  font-weight: bold;
+  color: #2563eb; /* Primary blue */
+  margin-bottom: 5px;
+}
+
+.stats-label {
+  font-size: 1.1rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.button-container {
+  display: flex;
+  gap: 25px; /* Increased gap */
+}
+
+.home-button {
+  padding: 15px 30px; /* Larger buttons */
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 10px; /* Slightly more rounded */
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.home-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.home-button:hover::before {
+  left: 0;
+}
+
+.home-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.home-button.add-employee {
+  background: linear-gradient(to right, #10b981, #059669); /* Green gradient */
+}
+
+.home-button.add-employee:hover {
+  background: linear-gradient(to right, #059669, #10b981);
+}
+
+/* Keyframe Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-heading {
+    font-size: 2.5rem;
+  }
+
+  .home-paragraph {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+
+  .stats-number {
+    font-size: 3rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .home-button {
+    width: 80%;
+  }
+}
