@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllEmployees } from './employeeService';
+import './Home.css'; // Import the new CSS file
 
 const Home = () => {
   const [employeeCount, setEmployeeCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [animatedCount, setAnimatedCount] = useState(0); // For count-up animation
 
   useEffect(() => {
     const fetchEmployeeCount = async () => {
@@ -22,95 +24,46 @@ const Home = () => {
     fetchEmployeeCount();
   }, []);
 
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '80vh',
-    background: 'linear-gradient(to right, #f8fafc, #dbeafe)',
-    color: '#1e3a8a',
-    textAlign: 'center',
-    padding: '20px',
-    borderRadius: '12px',
-    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-  };
+  // Count-up animation effect
+  useEffect(() => {
+    if (!isLoading && employeeCount > 0) {
+      let start = 0;
+      const end = employeeCount;
+      const duration = 1000; // 1 second
+      const increment = end / (duration / 10); // Increment every 10ms
 
-  const headingStyle = {
-    fontSize: '2.5rem',
-    fontWeight: '700',
-    marginBottom: '15px',
-  };
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          start = end;
+          clearInterval(timer);
+        }
+        setAnimatedCount(Math.floor(start));
+      }, 10);
 
-  const paraStyle = {
-    fontSize: '1.2rem',
-    color: '#334155',
-    maxWidth: '600px',
-    marginBottom: '30px',
-  };
+      return () => clearInterval(timer);
+    }
+  }, [employeeCount, isLoading]);
 
-  const statsContainerStyle = {
-    background: '#ffffff',
-    padding: '20px 30px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.05)',
-    marginBottom: '30px',
-  };
-
-  const statsNumberStyle = {
-    fontSize: '2.5rem',
-    fontWeight: 'bold',
-    color: '#1e3a8a',
-  };
-
-  const statsLabelStyle = {
-    fontSize: '1rem',
-    color: '#64748b',
-  };
-
-  const buttonContainerStyle = {
-    display: 'flex',
-    gap: '20px',
-  };
-
-  const buttonStyle = {
-    padding: '12px 25px',
-    fontSize: '1.1rem',
-    fontWeight: '600',
-    color: '#fff',
-    background: 'linear-gradient(to right, #3b82f6, #2563eb)',
-    border: 'none',
-    borderRadius: '8px',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-  };
 
   return (
-    <div style={containerStyle}>
-      <h1 style={headingStyle}>Welcome to the Dashboard 🚀</h1>
-      <p style={paraStyle}>
+    <div className="home-container">
+      <h1 className="home-heading">Welcome to the Dashboard 🚀</h1>
+      <p className="home-paragraph">
         This system helps you manage employee records efficiently. You can add new employees, update their details,
         or remove them as needed.
       </p>
 
-      <div style={statsContainerStyle}>
-        <div style={statsNumberStyle}>{isLoading ? '...' : employeeCount}</div>
-        <div style={statsLabelStyle}>Total Employees</div>
+      <div className="stats-container">
+        <div className="stats-number">{isLoading ? '...' : animatedCount}</div>
+        <div className="stats-label">Total Employees</div>
       </div>
 
-      <div style={buttonContainerStyle}>
-        <Link to="/employees" style={buttonStyle}
-          onMouseOver={e => e.target.style.transform = 'translateY(-2px)'}
-          onMouseOut={e => e.target.style.transform = 'translateY(0)'}
-        >
+      <div className="button-container">
+        <Link to="/employees" className="home-button">
           View All Employees
         </Link>
-        <Link to="/add" style={{...buttonStyle, background: 'linear-gradient(to right, #22c55e, #16a34a)'}}
-          onMouseOver={e => e.target.style.transform = 'translateY(-2px)'}
-          onMouseOut={e => e.target.style.transform = 'translateY(0)'}
-        >
+        <Link to="/add" className="home-button add-employee">
           Add New Employee
         </Link>
       </div>

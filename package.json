@@ -2,6 +2,7 @@
   "name": "employee-management-frontend",
   "version": "0.1.0",
   "private": true,
+
   "overrides": {
     "glob": "^9.0.0",
     "svgo": "^2.8.0"
