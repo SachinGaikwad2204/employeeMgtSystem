@@ -12,11 +12,19 @@ const EmployeeList = () => {
     try {
       setLoading(true);
       const res = await getAllEmployees();
-      setEmployees(res.data);
+      // Ensure that res.data is an array before setting it
+      if (Array.isArray(res.data)) {
+        setEmployees(res.data);
+      } else {
+        // If res.data is not an array, set employees to an empty array
+        setEmployees([]);
+      }
       setError(null);
     } catch (err) {
       console.error('Error fetching employees:', err);
       setError("Failed to fetch employees. Please ensure the backend server is running and accessible.");
+      // Also set employees to an empty array in case of an error
+      setEmployees([]);
     } finally {
       setLoading(false);
     }
@@ -149,7 +157,7 @@ const EmployeeList = () => {
             </tr>
           </thead>
           <tbody>
-            {employees.map(emp => (
+            {Array.isArray(employees) && employees.map(emp => (
               <tr key={emp.id}>
                 <td style={tdStyle}>{emp.fullName}</td>
                 <td style={tdStyle}>{emp.email}</td>
