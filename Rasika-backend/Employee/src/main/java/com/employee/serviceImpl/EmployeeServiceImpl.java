@@ -5,13 +5,13 @@ import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
 @Service
-
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
@@ -19,12 +19,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // ✅ Get all employees
     @Override
+    @Transactional(readOnly = true)
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
     // ✅ Get employee by ID
     @Override
+    @Transactional(readOnly = true)
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
@@ -32,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // ✅ Create employee with optional files
     @Override
+    @Transactional
     public Employee createEmployeeWithFiles(Employee employee, MultipartFile profilePhoto, MultipartFile resume) {
         try {
             if (profilePhoto != null && !profilePhoto.isEmpty()) {
@@ -50,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // ✅ Update employee with optional new files
     @Override
+    @Transactional
     public Employee updateEmployeeWithFiles(Long id, Employee updatedEmployee, MultipartFile profilePhoto, MultipartFile resume) {
         Employee existing = getEmployeeById(id);
 
@@ -70,6 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // ✅ Delete employee
     @Override
+    @Transactional
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
