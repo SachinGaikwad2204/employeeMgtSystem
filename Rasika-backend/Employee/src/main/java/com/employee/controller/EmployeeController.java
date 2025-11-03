@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin(origins = "*")
 // Allow requests from local dev and the deployed Vercel frontend. Adjust/add origins as needed.
 
 public class EmployeeController {
